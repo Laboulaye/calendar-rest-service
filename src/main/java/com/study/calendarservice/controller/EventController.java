@@ -1,9 +1,8 @@
 package com.study.calendarservice.controller;
 
 import com.study.calendarservice.model.Event;
-import com.study.calendarservice.repository.EventRepo;
+import com.study.calendarservice.model.SearchPeriod;
 import com.study.calendarservice.service.EventService;
-import org.aspectj.weaver.ConcreteTypeMunger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,5 +43,10 @@ public class EventController {
     @DeleteMapping("/events/{eventId}")
     public void deleteEvent(@PathVariable("userId") long userId, @PathVariable("eventId") long eventId){
         eventService.deleteEvent(userId, eventId);
+    }
+
+    @PostMapping("/search")
+    public List<Event> getEventsOverCurrentPeriod(@PathVariable("userId") long userId, @RequestBody SearchPeriod search){
+        return eventService.getEventsOverCurrentPeriod(userId, search);
     }
 }

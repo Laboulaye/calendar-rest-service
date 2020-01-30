@@ -1,7 +1,6 @@
 package com.study.calendarservice.controller;
 
 import com.study.calendarservice.model.User;
-import com.study.calendarservice.repository.UserRepo;
 import com.study.calendarservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
