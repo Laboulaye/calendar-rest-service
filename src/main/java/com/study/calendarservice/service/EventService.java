@@ -23,19 +23,44 @@ public class EventService {
         this.userRepo = userRepo;
     }
 
-    public List<Event> getAllEventsByUserId(long userId){
-        User user = userRepo.findById(userId).orElseThrow(UserDoesNotExistException::new);
-        return eventRepo.findAllByAuthor(userId);
+    public List<Event> getAllEventsByUserId(Long userId){
+        isUserExist(userId);
+        return eventRepo.findAllByAuthor_Id(userId);
     }
 
     public Event addEvent(long userId, Event event){
-        User user = userRepo.findById(userId).orElseThrow(UserDoesNotExistException::new);
+        User user = userRepo.findById(userId).orElseThrow(()->new UserDoesNotExistException(userId));
+        List<Event> listEvents = user.getEvents();
+        listEvents.add(event);
+        user.setEvents(listEvents);
+        event.setAuthor(user);
+        userRepo.save(user);
         return eventRepo.save(event);
     }
 
-    public Event ediEvent(long userId, long eventId, Event event){
-        User user = userRepo.findById(userId).orElseThrow(UserDoesNotExistException::new);
-        Event event1 = eventRepo.findById(eventId).orElseThrow(EventDoesNotExistException::new);
+    public Event getEventById(long userId, long eventId){
+        isUserExist(userId);
+        isEventExist(eventId);
+        return eventRepo.getOne(eventId);
+    }
+
+    public Event editEvent(long userId, long eventId, Event event){
+       isUserExist(userId);
+       isEventExist(eventId);
         return eventRepo.save(event);
+    }
+
+    public void deleteEvent(long userId, long eventId){
+        isUserExist(userId);
+        eventRepo.deleteById(eventId);
+    }
+
+
+    private void isUserExist(long userId){
+        userRepo.findById(userId).orElseThrow(()-> new UserDoesNotExistException(userId));
+    }
+
+    private void isEventExist(long eventId){
+        eventRepo.findById(eventId).orElseThrow(()-> new EventDoesNotExistException(eventId));
     }
 }

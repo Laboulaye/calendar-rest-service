@@ -1,5 +1,6 @@
 package com.study.calendarservice.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,5 +26,6 @@ public class User {
     private String lastName;
 
     @OneToMany(mappedBy = "author")
+    @JsonIgnore
     private List<Event> events;
 }

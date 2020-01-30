@@ -5,7 +5,6 @@ import com.study.calendarservice.model.User;
 import com.study.calendarservice.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -24,7 +23,8 @@ public class UserService {
     }
 
     public User getUserById(long userId){
-       return userRepo.findById(userId).orElseThrow(UserDoesNotExistException::new);
+        isUserExist(userId);
+       return userRepo.getOne(userId);
     }
 
     public User addUser(User user){
@@ -32,12 +32,17 @@ public class UserService {
     }
 
     public User editUser(long userId, User user){
-        userRepo.findById(userId).orElseThrow(UserDoesNotExistException::new);
+        isUserExist(userId);
         return userRepo.save(user);
     }
 
     public void deleteUser(long userId){
         userRepo.deleteById(userId);
+    }
+
+
+    private void isUserExist(long userId){
+        userRepo.findById(userId).orElseThrow(()->new UserDoesNotExistException(userId));
     }
 }
 

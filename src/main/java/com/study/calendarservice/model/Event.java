@@ -1,10 +1,12 @@
 package com.study.calendarservice.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.Period;
 
@@ -18,11 +20,11 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "date_time")
-    private LocalDateTime dateTime;
+    @Column(name = "start_date_time")
+    private LocalDateTime startDateTime;
 
-    @Column(name = "duration")
-    private Period duration;
+    @Column(name = "end_date_time")
+    private LocalDateTime endDateTime;
 
     @Column(name = "name")
     private String name;
@@ -31,6 +33,7 @@ public class Event {
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "usr_id", nullable = false)
+    @JoinColumn(name = "usr_id")
+    @JsonIgnore
     private User author;
 }

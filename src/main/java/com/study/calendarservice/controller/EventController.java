@@ -25,14 +25,24 @@ public class EventController {
         return eventService.getAllEventsByUserId(userId);
     }
 
-    @PostMapping("/events/")
-    public Event addEvent(@PathVariable("userId") long userId, Event event){
+    @PostMapping("/events")
+    public Event addEvent(@PathVariable("userId") long userId, @RequestBody Event event){
         return eventService.addEvent(userId, event);
+    }
+
+    @GetMapping("/events/{eventId}")
+    public Event getEventById(@PathVariable("userId") long userId, @PathVariable("eventId") long eventId){
+        return eventService.getEventById(userId, eventId);
     }
 
     @PutMapping("/events/{eventId}")
     public Event editEventById(@PathVariable("userId") long userId, @PathVariable("eventId") long eventId,
                                @RequestBody Event event){
-        return eventService.ediEvent(userId, eventId, event);
+        return eventService.editEvent(userId, eventId, event);
+    }
+
+    @DeleteMapping("/events/{eventId}")
+    public void deleteEvent(@PathVariable("userId") long userId, @PathVariable("eventId") long eventId){
+        eventService.deleteEvent(userId, eventId);
     }
 }
