@@ -33,6 +33,7 @@ public class UserService {
 
     public User editUser(long userId, User user){
         isUserExist(userId);
+        user.setId(userId);
         return userRepo.save(user);
     }
 

@@ -33,9 +33,6 @@ public class EventService {
     public Event addEvent(long userId, Event event){
         isUserExist(userId);
         User user = userRepo.getOne(userId);
-        List<Event> listEvents = user.getEvents();
-        listEvents.add(event);
-        user.setEvents(listEvents);
         event.setUser(user);
         userRepo.save(user);
         return eventRepo.save(event);
@@ -48,8 +45,11 @@ public class EventService {
     }
 
     public Event editEvent(long userId, long eventId, Event event){
-       isUserExist(userId);
-       isEventExist(eventId);
+        isUserExist(userId);
+        isEventExist(eventId);
+        User user = userRepo.getOne(userId);
+        event.setUser(user);
+        event.setId(eventId);
         return eventRepo.save(event);
     }
 
@@ -62,8 +62,8 @@ public class EventService {
         isUserExist(userId);
         List<Event> allEvents = eventRepo.findAllByUser_Id(userId);
         return allEvents.stream()
-                .filter(event -> event.getStartDateTime().isAfter(search.getBeginSearchPeriod()))
-                .filter(event-> event.getStartDateTime().isBefore(search.getEndSearchPeriod()))
+                .filter(event -> event.getBeginDateTime().isAfter(search.getBeginSearchPeriod()))
+                .filter(event-> event.getBeginDateTime().isBefore(search.getEndSearchPeriod()))
                 .collect(Collectors.toList());
     }
 

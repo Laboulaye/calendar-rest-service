@@ -13,9 +13,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class SearchPeriod {
 
-    @JsonFormat(pattern = "HH:mm dd-MM-YYYY")
+    @JsonFormat(pattern = "HH:mm dd-MM-yyyy")
     private LocalDateTime beginSearchPeriod;
 
-    @JsonFormat(pattern = "HH:mm dd-MM-YYYY")
+    @JsonFormat(pattern = "HH:mm dd-MM-yyyy")
     private LocalDateTime endSearchPeriod;
 }

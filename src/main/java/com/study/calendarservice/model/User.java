@@ -25,7 +25,7 @@ public class User {
     @Column(name = "last_name")
     private String lastName;
 
-    @OneToMany(mappedBy = "author")
+    @OneToMany(mappedBy = "user")
     @JsonIgnore
     private List<Event> events;
 }
