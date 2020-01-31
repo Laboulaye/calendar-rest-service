@@ -22,13 +22,13 @@ public class UserService {
         return userRepo.findAll();
     }
 
-    public User getUserById(long userId){
-        isUserExist(userId);
-       return userRepo.getOne(userId);
-    }
-
     public User addUser(User user){
         return userRepo.save(user);
+    }
+
+    public User getUserById(long userId){
+        isUserExist(userId);
+        return userRepo.getOne(userId);
     }
 
     public User editUser(long userId, User user){
