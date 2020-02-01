@@ -18,7 +18,8 @@ import java.time.LocalDateTime;
 public class Event {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "custom")
+    @SequenceGenerator(name ="custom", sequenceName = "seq", initialValue = 10)
     private long id;
 
     @Column(name = "begin_date_time")
